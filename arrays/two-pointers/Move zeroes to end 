@@ -1,0 +1,72 @@
+/*
+ * Date: 17/09/2026
+ * Problem: Move Zeroes
+ * LeetCode: #283
+ * Pattern: Two Pointers
+ * Data Structure: Array
+ *
+ * Problem:
+ * Move all zeroes to the end of the array while maintaining
+ * the relative order of the non-zero elements.
+ *
+ * Approach:
+ * Use two pointers: slow and fast.
+ *
+ * - fast scans every element of the array.
+ * - slow keeps track of the position where the next
+ *   non-zero element should be placed.
+ * - When fast finds a non-zero element, swap it with
+ *   the element at slow and move slow forward.
+ *
+ * Example:
+ * Input:  [0,1,0,3,12]
+ * Output: [1,3,12,0,0]
+ *
+ * Brute Force:
+ * Repeated shifting when a zero is encountered can take O(n²)
+ * time in the worst case and may require extra space depending
+ * on the implementation.
+ *
+ * Optimized Approach:
+ * Slow + Fast Two Pointers
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ *
+ * What I Learned:
+ * - How slow and fast pointers have different responsibilities.
+ * - How to solve an array problem in-place.
+ * - Why repeated shifting can be expensive.
+ * - How two pointers reduce the time complexity to O(n).
+ */
+
+public class MoveZeroes {
+
+    public static void moveZeroes(int[] nums) {
+
+        int slow = 0;
+
+        for (int fast = 0; fast < nums.length; fast++) {
+
+            if (nums[fast] != 0) {
+
+                int temp = nums[slow];
+                nums[slow] = nums[fast];
+                nums[fast] = temp;
+
+                slow++;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+        int[] nums = {0, 1, 0, 3, 12};
+
+        moveZeroes(nums);
+
+        for (int num : nums) {
+            System.out.print(num + " ");
+        }
+    }
+}
