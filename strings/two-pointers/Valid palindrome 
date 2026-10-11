@@ -1,0 +1,70 @@
+# LeetCode 125: Valid Palindrome
+
+**Difficulty:** Easy  
+**Language:** Java  
+**Pattern:** Two Pointers
+
+## Problem Statement
+
+Determine whether a string is a palindrome by considering only alphanumeric characters and ignoring uppercase and lowercase differences.
+
+**Example:**
+```text
+Input:  "A man, a plan, a canal: Panama"
+Output: true
+```
+
+## Approach 1: Brute Force — String Concatenation
+
+**Idea:** Remove non-alphanumeric characters, convert the remaining characters to lowercase, and build a reversed string using repeated String concatenation. Compare the reversed string with the cleaned string.
+
+- **Time Complexity:** O(n²) — repeated concatenation copies existing characters.
+- **Space Complexity:** O(n) auxiliary space for the strings, with additional temporary allocations during concatenation.
+
+## Approach 2: StringBuilder — Clean and Reverse
+
+**Idea:** Remove non-alphanumeric characters using `replaceAll()`, convert the cleaned string to lowercase, reverse it using `StringBuilder.reverse()`, and compare the reversed string with the cleaned string.
+
+- **Time Complexity:** O(n) — cleaning, reversing, and comparing take linear time.
+- **Space Complexity:** O(n) — the cleaned and reversed strings require additional memory.
+
+## Approach 3: Optimized — Two Pointers
+
+**Idea:** Use two pointers, one at the beginning and one at the end of the original string. Skip non-alphanumeric characters, compare the remaining characters without regard to case, and move both pointers inward. Return `false` immediately if a mismatch is found; otherwise, return `true` when the pointers meet or cross.
+
+### Java Solution
+
+```java
+class Solution {
+    public boolean isPalindrome(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left < right) {
+            if (!Character.isLetterOrDigit(s.charAt(left))) {
+                left++;
+            } else if (!Character.isLetterOrDigit(s.charAt(right))) {
+                right--;
+            } else {
+                if (Character.toLowerCase(s.charAt(left)) !=
+                    Character.toLowerCase(s.charAt(right))) {
+                    return false;
+                }
+
+                left++;
+                right--;
+            }
+        }
+
+        return true;
+    }
+}
+```
+
+**Time Complexity:** O(n) — each character is checked at most a constant number of times.
+
+**Space Complexity:** O(1) auxiliary space — no additional cleaned or reversed string is created.
+
+## Key Takeaway
+
+String concatenation takes O(n²) time, while `StringBuilder` improves the brute-force approach to O(n). The optimized two-pointer approach achieves O(n) time and O(1) auxiliary space by processing the original string directly.
