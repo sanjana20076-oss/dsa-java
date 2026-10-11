@@ -1,0 +1,65 @@
+# LeetCode 345: Reverse Vowels of a String
+
+**Difficulty:** Easy  
+**Language:** Java  
+**Pattern:** Two Pointers
+
+## Problem Statement
+
+Reverse only the vowels in a given string while keeping all non-vowel characters in their original positions. Both lowercase and uppercase vowels must be handled.
+
+**Example:**
+```text
+Input:  "hello"
+Output: "holle"
+```
+
+## Approach 1: Brute Force — Store Vowels
+
+**Idea:** Traverse the string and collect all vowels in a separate `StringBuilder`. Then traverse the string again and replace each vowel with the collected vowels in reverse order.
+
+- **Time Complexity:** O(n) — two separate traversals.
+- **Space Complexity:** O(n) — stores the vowels and a character array.
+
+## Approach 2: Optimized — Two Pointers
+
+**Idea:** Convert the string into a character array. Initialize one pointer at the beginning and another at the end. Skip non-vowels, swap the vowels when both pointers find them, and move both pointers toward the center until they meet or cross.
+
+### Java Solution
+
+```java
+class Solution {
+    public String reverseVowels(String s) {
+        char[] arr = s.toCharArray();
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left < right) {
+            if ("aeiou".indexOf(
+                    Character.toLowerCase(arr[left])) == -1) {
+                left++;
+            } else if ("aeiou".indexOf(
+                    Character.toLowerCase(arr[right])) == -1) {
+                right--;
+            } else {
+                char temp = arr[left];
+                arr[left] = arr[right];
+                arr[right] = temp;
+
+                left++;
+                right--;
+            }
+        }
+
+        return new String(arr);
+    }
+}
+```
+
+**Time Complexity:** O(n) — both pointers traverse the string from opposite ends.
+
+**Space Complexity:** O(n) — the character array stores the string's characters.
+
+## Key Takeaway
+
+The two-pointer approach avoids storing vowels separately and swaps them directly in the character array. It reduces extra storage compared with the brute-force approach while maintaining linear time complexity.
